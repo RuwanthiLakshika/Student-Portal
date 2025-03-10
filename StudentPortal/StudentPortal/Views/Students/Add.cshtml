@@ -1,0 +1,247 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model StudentPortal.Models.AddStudentViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 35px;
+            margin-top: 40px;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-title {
+            color: #3b71ca;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .page-title:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 3px;
+                width: 60px;
+                background-color: #3b71ca;
+            }
+
+        .form-control:focus {
+            border-color: #3b71ca;
+            box-shadow: 0 0 0 0.25rem rgba(59, 113, 202, 0.25);
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .form-check-input:checked {
+            background-color: #3b71ca;
+            border-color: #3b71ca;
+        }
+
+        .btn-primary {
+            background-color: #3b71ca;
+            border-color: #3b71ca;
+            padding: 12px 30px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #2a5298;
+                border-color: #2a5298;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(59, 113, 202, 0.3);
+            }
+
+        .form-section {
+            padding: 10px 0;
+        }
+
+        .form-floating > .form-control {
+            padding-top: 1.625rem;
+            padding-bottom: 0.625rem;
+        }
+
+        .form-floating > label {
+            padding: 1rem 0.75rem;
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 1050;
+            min-width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+            .custom-alert.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .success-icon, .error-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .success-icon {
+            color: #198754;
+        }
+
+        .error-icon {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="form-container">
+                    <h1 class="page-title">Student Registration</h1>
+
+                    <form method="post" class="needs-validation" novalidate id="studentForm">
+                        <div class="form-section">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Full Name" required>
+                                <label for="Name">Full Name</label>
+                                <div class="invalid-feedback">Please provide your name</div>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="Email" asp-for="Email" placeholder="name@example.com" required>
+                                <label for="Email">Email Address</label>
+                                <div class="invalid-feedback">Please provide a valid email</div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input type="tel" class="form-control" id="Phone" asp-for="Phone" placeholder="Phone Number" required>
+                                <label for="Phone">Phone Number</label>
+                                <div class="invalid-feedback">Please provide a phone number</div>
+                            </div>
+
+                            <div class="form-check form-switch mb-4">
+                                <input class="form-check-input" type="checkbox" id="Subscribed" asp-for="Subscribed">
+                                <label class="form-check-label" for="Subscribed">Subscribe to newsletter and updates</label>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Register Student</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Alert -->
+    <div class="custom-alert alert alert-success alert-dismissible fade" role="alert" id="successAlert">
+        <div class="d-flex align-items-center">
+            <div class="success-icon">✓</div>
+            <strong>Success!</strong> Student registered successfully.
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Error Alert -->
+    <div class="custom-alert alert alert-danger alert-dismissible fade" role="alert" id="errorAlert">
+        <div class="d-flex align-items-center">
+            <div class="error-icon">✗</div>
+            <strong>Error!</strong> Error in registering student.
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('.needs-validation');
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
+            const studentForm = document.getElementById('studentForm');
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (!form.checkValidity()) {
+                        form.classList.add('was-validated');
+                        showAlert(errorAlert);
+                        return;
+                    }
+
+                    const isSuccess = Math.random() < 0.9;
+
+                    if (isSuccess) {
+                        showAlert(successAlert);
+
+                        form.reset();
+                        form.classList.remove('was-validated');
+
+                    } else {
+                        showAlert(errorAlert);
+                    }
+                }, false);
+            });
+
+            function showAlert(alertElement) {
+                hideAllAlerts();
+                alertElement.classList.add('show');
+
+                setTimeout(() => {
+                    alertElement.classList.remove('show');
+                }, 5000);
+            }
+
+            function hideAllAlerts() {
+                document.querySelectorAll('.custom-alert').forEach(alert => {
+                    alert.classList.remove('show');
+                });
+            }
+            document.querySelectorAll('.btn-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.custom-alert').classList.remove('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
