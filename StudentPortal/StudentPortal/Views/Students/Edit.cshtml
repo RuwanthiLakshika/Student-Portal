@@ -212,12 +212,11 @@
             Array.from(forms).forEach(form => {
                 form.addEventListener('submit', event => {
                     if (!form.checkValidity()) {
-                        event.preventDefault();  // Prevent submission if validation fails
+                        event.preventDefault();  
                         event.stopPropagation();
                         form.classList.add('was-validated');
                         showAlert(errorAlert);
                     } else {
-                        // Allow form to submit normally to the server
                         form.classList.remove('was-validated');
                     }
                 }, false);
