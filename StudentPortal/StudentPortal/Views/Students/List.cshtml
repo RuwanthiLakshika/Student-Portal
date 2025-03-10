@@ -1,0 +1,193 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<StudentPortal.Models.Entities.Student>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px 0;
+        }
+
+        .content-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 35px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-title {
+            color: #3b71ca;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .page-title:after {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 3px;
+                width: 60px;
+                background-color: #3b71ca;
+            }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+            .table thead th {
+                background-color: #3b71ca;
+                color: white;
+                font-weight: 500;
+                padding: 15px;
+                border: none;
+            }
+
+            .table tbody tr:nth-child(even) {
+                background-color: rgba(59, 113, 202, 0.05);
+            }
+
+            .table tbody tr:hover {
+                background-color: rgba(59, 113, 202, 0.1);
+                transition: background-color 0.2s ease;
+            }
+
+            .table td {
+                padding: 15px;
+                vertical-align: middle;
+                border-top: 1px solid #e9ecef;
+            }
+
+        .btn-primary {
+            background-color: #3b71ca;
+            border-color: #3b71ca;
+            padding: 8px 20px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #2a5298;
+                border-color: #2a5298;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(59, 113, 202, 0.3);
+            }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+
+        .action-btn {
+            color: #3b71ca;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+            .action-btn:hover {
+                background-color: rgba(59, 113, 202, 0.1);
+                color: #2a5298;
+            }
+
+            .action-btn i {
+                margin-right: 5px;
+            }
+
+        .add-btn {
+            margin-bottom: 20px;
+        }
+
+        .empty-table {
+            text-align: center;
+            padding: 30px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="content-container">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h1 class="page-title">Students</h1>
+                        <a href="/Students/Add" class="btn btn-primary add-btn">
+                            <i class="fas fa-plus"></i> Add New Student
+                        </a>
+                    </div>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var student in Model)
+                                    {
+                                        <tr>
+                                            <td>@student.Id</td>
+                                            <td>@student.Name</td>
+                                            <td>@student.Email</td>
+                                            <td>
+                                                <a asp-controller="Students" asp-action="Edit" asp-route-id="@student.Id">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-table">
+                            <i class="fas fa-users fa-3x mb-3"></i>
+                            <h5>No students found</h5>
+                            <p>Get started by adding a new student</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
